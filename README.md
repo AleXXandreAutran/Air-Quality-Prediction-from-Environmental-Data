@@ -76,8 +76,4 @@ The final models are evaluated on a held-out test set. In the obtained run, KNN 
 
 ## Figures
 
-The notebook automatically saves figures in the `figures/` folder as both PDF and PNG files. These can be directly included in a LaTeX report.
-
-## Notes
-
-This project is a predictive statistical analysis. Correlations and model coefficients should not be interpreted as causal effects without an appropriate causal design.
+The notebook automatically saves figures in the `figures/` folder as both PDF and PNG files.
