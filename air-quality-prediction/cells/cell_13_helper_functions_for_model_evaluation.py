@@ -1,6 +1,4 @@
-# ============================================================
 # 13. Helper functions for model evaluation
-# ============================================================
 
 def regression_metrics(y_true, y_pred) -> dict:
     """Compute standard regression metrics."""
