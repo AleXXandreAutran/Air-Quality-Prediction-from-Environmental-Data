@@ -1,8 +1,4 @@
-# %% [markdown]
-# ## Cell 1: 1. Libraries and global configuration
-# ============================================================
 # 1. Libraries and global configuration
-# ============================================================
 
 from pathlib import Path
 import warnings
@@ -58,11 +54,7 @@ def save_figure(name: str) -> None:
     plt.savefig(FIG_DIR / f"{name}.pdf", bbox_inches="tight")
     plt.savefig(FIG_DIR / f"{name}.png", bbox_inches="tight")
 
-# %% [markdown]
-# ## Cell 2: 2. Load the dataset
-# ============================================================
 # 2. Load the dataset
-# ============================================================
 
 from pathlib import Path
 import os
@@ -98,11 +90,8 @@ raw_df = raw_df.dropna(axis=1, how="all")  # Remove empty trailing columns
 print(f"Initial shape: {raw_df.shape}")
 display(raw_df.head())
 
-# %% [markdown]
-# ## Cell 3: 3. Variable dictionary and basic information
-# ============================================================
+
 # 3. Variable dictionary and basic information
-# ============================================================
 
 variable_descriptions = {
     "Date": "Measurement date",
@@ -131,11 +120,8 @@ summary_info = pd.DataFrame({
 
 display(summary_info)
 
-# %% [markdown]
-# ## Cell 4: 4. Cleaning missing values and creating a datetime variable
-# ============================================================
+
 # 4. Cleaning missing values and creating a datetime variable
-# ============================================================
 
 df = raw_df.copy()
 
@@ -177,11 +163,8 @@ display(missing_after[missing_after > 0].to_frame("missing_count"))
 
 display(df.head())
 
-# %% [markdown]
-# ## Cell 5: 5. Create useful time variables for exploratory analysis
-# ============================================================
+
 # 5. Create useful time variables for exploratory analysis
-# ============================================================
 
 df["Hour"] = df["Datetime"].dt.hour
 df["DayOfWeek"] = df["Datetime"].dt.dayofweek  # Monday = 0, Sunday = 6
@@ -192,11 +175,8 @@ df["DayName"] = pd.Categorical(df["DayName"], categories=ordered_days, ordered=T
 
 display(df[numeric_cols].describe().T.round(3))
 
-# %% [markdown]
-# ## Cell 6: 6. Daily cycles: hourly boxplots
-# ============================================================
+
 # 6. Daily cycles: hourly boxplots
-# ============================================================
 
 variables_to_plot = [
     "CO(GT)", "PT08.S1(CO)", "C6H6(GT)",
@@ -226,11 +206,8 @@ fig.suptitle("Hourly distribution of pollutants and meteorological variables", y
 save_figure("hourly_cycles_boxplots")
 plt.show()
 
-# %% [markdown]
-# ## Cell 7: 7. Weekly average profile
-# ============================================================
+
 # 7. Weekly average profile
-# ============================================================
 
 weekly_means = (
     df.groupby("DayName", observed=True)[variables_to_plot]
@@ -272,11 +249,8 @@ g.fig.savefig(FIG_DIR / "weekly_profile.pdf", bbox_inches="tight")
 g.fig.savefig(FIG_DIR / "weekly_profile.png", bbox_inches="tight")
 plt.show()
 
-# %% [markdown]
-# ## Cell 8: 8. Correlation analysis
-# ============================================================
+
 # 8. Correlation analysis
-# ============================================================
 
 numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
 corr_matrix = df[numeric_cols].corr()
@@ -303,11 +277,8 @@ plt.yticks(rotation=0)
 save_figure("correlation_matrix")
 plt.show()
 
-# %% [markdown]
-# ## Cell 9: 9. Variables most correlated with the target
-# ============================================================
+
 # 9. Variables most correlated with the target
-# ============================================================
 
 target_corr = (
     corr_matrix[TARGET]
@@ -329,11 +300,7 @@ plt.title("Top variables associated with CO(GT)")
 save_figure("top_target_correlations")
 plt.show()
 
-# %% [markdown]
-# ## Cell 10: 10. Scatterplots of the most correlated variables
-# ============================================================
 # 10. Scatterplots of the most correlated variables
-# ============================================================
 
 top_features = target_corr.head(5).index.tolist()
 
@@ -366,11 +333,8 @@ fig.suptitle("Relationship between CO(GT) and the most correlated predictors", y
 save_figure("scatter_top_correlations")
 plt.show()
 
-# %% [markdown]
-# ## Cell 11: 11. Simple outlier screening using the IQR rule
-# ============================================================
+
 # 11. Simple outlier screening using the IQR rule
-# ============================================================
 
 outlier_summary = []
 
@@ -408,11 +372,8 @@ for i in range(len(cols)):
 strong_pairs = pd.DataFrame(strong_pairs).sort_values("Correlation", key=lambda s: s.abs(), ascending=False)
 display(strong_pairs.round(3))
 
-# %% [markdown]
-# ## Cell 12: 12. Feature matrix and target vector
-# ============================================================
+
 # 12. Feature matrix and target vector
-# ============================================================
 
 features_to_drop = [TARGET, "Date", "Time", "Datetime", "DayName"]
 X = df.drop(columns=features_to_drop, errors="ignore")
@@ -433,11 +394,8 @@ print(f"Test set shape:     {X_test.shape}")
 
 display(X_train.head())
 
-# %% [markdown]
-# ## Cell 13: 13. Helper functions for model evaluation
-# ============================================================
+
 # 13. Helper functions for model evaluation
-# ============================================================
 
 def regression_metrics(y_true, y_pred) -> dict:
     """Compute standard regression metrics."""
@@ -456,11 +414,8 @@ def print_metrics(model_name: str, metrics: dict) -> None:
 
 cv = KFold(n_splits=5, shuffle=True, random_state=RANDOM_STATE)
 
-# %% [markdown]
-# ## Cell 14: 14. Ridge regression with cross-validation
-# ============================================================
+
 # 14. Ridge regression with cross-validation
-# ============================================================
 
 ridge_alphas = np.logspace(-3, 3, 100)
 
@@ -478,11 +433,8 @@ ridge_alpha = ridge_model.named_steps["model"].alpha_
 print(f"Best Ridge alpha: {ridge_alpha:.4f}")
 print_metrics("Ridge regression", ridge_metrics)
 
-# %% [markdown]
-# ## Cell 15: 15. Lasso regression with cross-validation
-# ============================================================
+
 # 15. Lasso regression with cross-validation
-# ============================================================
 
 lasso_alphas = np.logspace(-3, 1, 100)
 
@@ -518,11 +470,8 @@ print_metrics("Lasso regression", lasso_metrics)
 print("\nNumber of selected variables:", selected_lasso_features.shape[0])
 display(selected_lasso_features.to_frame("Lasso coefficient").round(4))
 
-# %% [markdown]
-# ## Cell 16: 16. K-nearest neighbors with grid search
-# ============================================================
+
 # 16. K-nearest neighbors with grid search
-# ============================================================
 
 knn_pipeline = Pipeline(steps=[
     ("scaler", StandardScaler()),
@@ -555,11 +504,8 @@ print("Best KNN parameters:")
 print(knn_search.best_params_)
 print_metrics("KNN regression", knn_metrics)
 
-# %% [markdown]
-# ## Cell 17: 17. Influence of k on KNN performance
-# ============================================================
+
 # 17. Influence of k on KNN performance
-# ============================================================
 
 knn_cv_results = pd.DataFrame(knn_search.cv_results_)
 knn_cv_results["RMSE_CV"] = -knn_cv_results["mean_test_score"]
@@ -594,11 +540,8 @@ plt.legend()
 save_figure("knn_k_selection")
 plt.show()
 
-# %% [markdown]
-# ## Cell 18: 18. Summary table
-# ============================================================
+
 # 18. Summary table
-# ============================================================
 
 results = pd.DataFrame([
     {"Model": "Ridge", **ridge_metrics, "Best hyperparameters": f"alpha={ridge_alpha:.4f}"},
@@ -610,11 +553,8 @@ results = results.sort_values("RMSE").reset_index(drop=True)
 
 display(results.round({"RMSE": 4, "MAE": 4, "R2": 4}))
 
-# %% [markdown]
-# ## Cell 19: 19. Visual comparison of model performance
-# ============================================================
+
 # 19. Visual comparison of model performance
-# ============================================================
 
 metrics_long = results.melt(
     id_vars="Model",
@@ -672,11 +612,8 @@ g.fig.savefig(FIG_DIR / "model_performance_comparison.pdf", bbox_inches="tight")
 g.fig.savefig(FIG_DIR / "model_performance_comparison.png", bbox_inches="tight")
 plt.show()
 
-# %% [markdown]
-# ## Cell 20: 20. Predicted versus true values
-# ============================================================
+
 # 20. Predicted versus true values
-# ============================================================
 
 prediction_df = pd.DataFrame({
     "True value": y_test,
@@ -727,11 +664,8 @@ g.fig.savefig(FIG_DIR / "predictions_vs_true.pdf", bbox_inches="tight")
 g.fig.savefig(FIG_DIR / "predictions_vs_true.png", bbox_inches="tight")
 plt.show()
 
-# %% [markdown]
-# ## Cell 21: 21. Residual diagnostics
-# ============================================================
+
 # 21. Residual diagnostics
-# ============================================================
 
 residuals_df = pd.DataFrame({
     "Ridge": y_test - y_pred_ridge,
@@ -763,11 +697,8 @@ plt.ylabel("Residual = true value - predicted value")
 save_figure("residual_distribution")
 plt.show()
 
-# %% [markdown]
-# ## Cell 22: 22. Coefficient interpretation for Ridge and Lasso
-# ============================================================
+
 # 22. Coefficient interpretation for Ridge and Lasso
-# ============================================================
 
 ridge_coefs = pd.Series(
     ridge_model.named_steps["model"].coef_,
@@ -783,11 +714,8 @@ coef_table = pd.DataFrame({
 
 display(coef_table.round(4))
 
-# %% [markdown]
-# ## Cell 23: 23. Coefficient importance plots
-# ============================================================
+
 # 23. Coefficient importance plots
-# ============================================================
 
 top_n = 12
 
@@ -822,11 +750,8 @@ fig.suptitle("Linear model coefficients after standardization", y=1.03, fontsize
 save_figure("linear_model_coefficients")
 plt.show()
 
-# %% [markdown]
-# ## Cell 24: 24. Final recommendation
-# ============================================================
-# 24. Final recommendation
-# ============================================================
+
+# 24. Final 
 
 best_model_name = results.iloc[0]["Model"]
 
