@@ -1,6 +1,4 @@
-# ============================================================
 # 5. Create useful time variables for exploratory analysis
-# ============================================================
 
 df["Hour"] = df["Datetime"].dt.hour
 df["DayOfWeek"] = df["Datetime"].dt.dayofweek  # Monday = 0, Sunday = 6
