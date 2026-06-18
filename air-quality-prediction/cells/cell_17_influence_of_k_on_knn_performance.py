@@ -1,6 +1,4 @@
-# ============================================================
 # 17. Influence of k on KNN performance
-# ============================================================
 
 knn_cv_results = pd.DataFrame(knn_search.cv_results_)
 knn_cv_results["RMSE_CV"] = -knn_cv_results["mean_test_score"]
