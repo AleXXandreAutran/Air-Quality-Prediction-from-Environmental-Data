@@ -4,7 +4,6 @@ from pathlib import Path
 import os
 import pandas as pd
 
-# GitHub-friendly configuration:
 # - Put AirQualityUCI.csv in the ./data folder, or
 # - Set the AIR_QUALITY_DATA environment variable to the CSV path.
 DATA_DIR = Path("data")
