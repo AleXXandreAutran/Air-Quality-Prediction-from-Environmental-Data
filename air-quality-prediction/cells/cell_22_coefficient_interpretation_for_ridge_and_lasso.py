@@ -1,6 +1,4 @@
-# ============================================================
 # 22. Coefficient interpretation for Ridge and Lasso
-# ============================================================
 
 ridge_coefs = pd.Series(
     ridge_model.named_steps["model"].coef_,
