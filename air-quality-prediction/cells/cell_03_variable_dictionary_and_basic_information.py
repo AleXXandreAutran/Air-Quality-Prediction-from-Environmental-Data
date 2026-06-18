@@ -1,6 +1,4 @@
-# ============================================================
 # 3. Variable dictionary and basic information
-# ============================================================
 
 variable_descriptions = {
     "Date": "Measurement date",
