@@ -1,6 +1,4 @@
-# ============================================================
 # 8. Correlation analysis
-# ============================================================
 
 numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
 corr_matrix = df[numeric_cols].corr()
