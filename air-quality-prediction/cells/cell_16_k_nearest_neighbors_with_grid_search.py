@@ -1,6 +1,4 @@
-# ============================================================
 # 16. K-nearest neighbors with grid search
-# ============================================================
 
 knn_pipeline = Pipeline(steps=[
     ("scaler", StandardScaler()),
