@@ -20,10 +20,9 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 warnings.filterwarnings("ignore")
 
-# Reproducibility
 RANDOM_STATE = 42
 
-# Aesthetic plotting style
+# Plotting style
 sns.set_theme(
     context="notebook",
     style="whitegrid",
@@ -44,7 +43,6 @@ plt.rcParams.update({
     "legend.framealpha": 0.9,
 })
 
-# Output folder for figures used in the report
 FIG_DIR = Path("figures")
 FIG_DIR.mkdir(exist_ok=True)
 
@@ -60,7 +58,6 @@ from pathlib import Path
 import os
 import pandas as pd
 
-# GitHub-friendly configuration:
 # - Put AirQualityUCI.csv in the ./data folder, or
 # - Set the AIR_QUALITY_DATA environment variable to the CSV path.
 DATA_DIR = Path("data")
