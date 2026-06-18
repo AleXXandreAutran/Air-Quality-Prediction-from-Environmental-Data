@@ -1,6 +1,4 @@
-# ============================================================
 # 1. Libraries and global configuration
-# ============================================================
 
 from pathlib import Path
 import warnings
