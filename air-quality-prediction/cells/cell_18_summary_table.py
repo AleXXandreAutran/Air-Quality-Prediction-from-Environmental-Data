@@ -1,6 +1,4 @@
-# ============================================================
 # 18. Summary table
-# ============================================================
 
 results = pd.DataFrame([
     {"Model": "Ridge", **ridge_metrics, "Best hyperparameters": f"alpha={ridge_alpha:.4f}"},
