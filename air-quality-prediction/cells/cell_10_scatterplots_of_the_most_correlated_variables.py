@@ -1,6 +1,4 @@
-# ============================================================
 # 10. Scatterplots of the most correlated variables
-# ============================================================
 
 top_features = target_corr.head(5).index.tolist()
 
