@@ -1,6 +1,4 @@
-# ============================================================
 # 7. Weekly average profile
-# ============================================================
 
 weekly_means = (
     df.groupby("DayName", observed=True)[variables_to_plot]
