@@ -1,6 +1,4 @@
-# ============================================================
 # 19. Visual comparison of model performance
-# ============================================================
 
 metrics_long = results.melt(
     id_vars="Model",
