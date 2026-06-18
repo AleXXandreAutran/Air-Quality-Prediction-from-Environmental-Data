@@ -1,6 +1,4 @@
-# ============================================================
 # 12. Feature matrix and target vector
-# ============================================================
 
 features_to_drop = [TARGET, "Date", "Time", "Datetime", "DayName"]
 X = df.drop(columns=features_to_drop, errors="ignore")
