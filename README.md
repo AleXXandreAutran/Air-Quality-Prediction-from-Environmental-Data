@@ -73,7 +73,3 @@ python air_quality_prediction.py
 ## Main results
 
 The final models are evaluated on a held-out test set. In the obtained run, KNN with a small number of neighbors gives the best predictive performance, while Ridge and Lasso remain useful for interpretation because their standardized coefficients are easier to analyze. The KNN result should be interpreted carefully because very small values of `k` can be sensitive to noise and may require external validation.
-
-## Figures
-
-The notebook automatically saves figures in the `figures/` folder as both PDF and PNG files.
