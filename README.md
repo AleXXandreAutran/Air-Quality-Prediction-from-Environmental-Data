@@ -16,20 +16,6 @@ The analysis includes:
 - model comparison using RMSE, MAE, and R²;
 - export of publication-ready figures.
 
-## Repository structure
-
-```text
-.
-├── README.md
-├── requirements.txt
-├── air_quality_prediction.ipynb   # Main notebook
-├── air_quality_prediction.py      # Same code as a Python script, with cell markers
-├── ALL_CODE_CELLS.md              # All notebook code cells in Markdown
-├── cells/                         # One Python file per notebook code cell
-├── data/                          # Put AirQualityUCI.csv here
-└── figures/                       # Generated figures are saved here
-```
-
 ## Dataset
 
 Download the **Air Quality Data Set** from the UCI Machine Learning Repository and place the CSV file in:
